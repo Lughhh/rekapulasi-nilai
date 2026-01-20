@@ -2,48 +2,78 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
+use App\Models\Nilai;
+
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable;
+    use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    'name',
+    'nim_nik',
+    'password',
+    'role',
+    'tahun_angkatan', // ⬅️ WAJIB
+    'bidang_keahlian',
+];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    protected $hidden = ['password'];
+
+    public function getAuthIdentifierName()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return 'nim_nik';
     }
+
+    public function kelas()
+    {
+    return $this->belongsToMany(Kelas::class, 'krs', 'mahasiswa_id', 'kelas_id');
+    }
+
+
+    public function nilai()
+    {
+        return $this->hasMany(Nilai::class, 'mahasiswa_id');
+    }
+
+    // ======================
+    // HITUNG IPK
+    // ======================
+    public function krs()
+{
+    return $this->hasMany(Krs::class, 'mahasiswa_id');
+}
+
+    public function nilais()
+    {
+    return $this->hasManyThrough(
+        Nilai::class,
+        Krs::class,
+        'mahasiswa_id', // FK di krs
+        'krs_id',       // FK di nilai
+        'id',
+        'id'
+    );
+    }
+
+/* ===== HITUNG IPK ===== */
+    public function hitungIpk()
+    {
+    $nilai = Nilai::whereHas('krs', fn($q)=>$q->where('mahasiswa_id',$this->id))->get();
+
+    if ($nilai->count()==0) return 0;
+
+    $total = 0;
+    foreach($nilai as $n){
+        $total += match($n->grade){
+            'A'=>4,'B'=>3,'C'=>2,'D'=>1, default=>0
+        };
+    }
+
+    return $total / $nilai->count();
+    }
+    // ======================
 }

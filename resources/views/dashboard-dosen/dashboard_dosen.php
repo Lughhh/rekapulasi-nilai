@@ -350,7 +350,9 @@
                 { nim: '2102001', nama: 'Dini Fitri', tugas: 77, kuis: 77, uts: 77, uas: 77, final_score: 77.00, grade_letter: 'B', kelas_id: 'K2' },
                 { nim: '2102002', nama: 'Eko Putra', tugas: 90, kuis: 90, uts: 90, uas: 90, final_score: 90.00, grade_letter: 'A', kelas_id: 'K2' },
                 // Mahasiswa Kelas K3 (C)
-                { nim: '2103001', nama: 'Fajar Kurnia', tugas: 80, kuis: 75, uts: 70, uas: 80, final_score: 0, grade_letter: '', kelas_id: 'K3' },
+                { nim: '2103001', nama: 'Fajar Kurnia
+                    
+                    ', tugas: 80, kuis: 75, uts: 70, uas: 80, final_score: 0, grade_letter: '', kelas_id: 'K3' },
                 { nim: '2103002', nama: 'Gita Laras', tugas: 65, kuis: 60, uts: 65, uas: 60, final_score: 0, grade_letter: '', kelas_id: 'K3' },
                 
             ],
