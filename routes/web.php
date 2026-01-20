@@ -112,11 +112,10 @@ Route::middleware('auth')->prefix('mahasiswa')->group(function () {
     Route::get('/khs', [NilaiController::class, 'khs'])
         ->name('mahasiswa.khs');
 
-    Route::get('/cetak-khs', [MahasiswaNilaiController::class,'cetakKhs'])
-        ->name('khs.cetak');
 
 
-    Route::get('/cetak', [MahasiswaNilaiController::class, 'cetak'])
-                ->name('cetak');
+    Route::get('/daftar-nilai',
+        [MahasiswaNilaiController::class,'index']
+    )->name('mahasiswa.nilai.index');
 });
 

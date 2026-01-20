@@ -26,10 +26,11 @@
             </a>
         </li>
 
-        <li class="{{ request()->is('mahasiswa.nilai.cetak') ? 'active' : '' }}">
-            <a href="{{ route('mahasiswa.nilai.cetak') }}" target="_blank">
-                <i class="bi bi-printer"></i> Cetak Nilai
-             </a>
-        </li>
+        <li class="{{ request()->is('mahasiswa/cetak-khs*') ? 'active' : '' }}">
+        <a href="{{ route('mahasiswa.nilai.index') }}">
+            <i class="bi bi-printer-fill"></i>
+            <span>Cetak Nilai</span>
+        </a>
+    </li>
     </ul>
 </div>
