@@ -10,12 +10,15 @@ class NilaiController extends Controller
 {
     public function index()
     {
+        $mahasiswa = Auth::user();
+
         $krs = Krs::with(['kelas.mataKuliah','nilai'])
-            ->where('mahasiswa_id', Auth::id())
+            ->where('mahasiswa_id', $mahasiswa->id)
             ->get();
 
         return view('mahasiswa.nilai.index', compact('krs'));
     }
+
 
     public function khs()
     {

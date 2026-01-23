@@ -12,6 +12,8 @@ use App\Http\Controllers\Kaprodi\KelasController;
 use App\Http\Controllers\Dosen\NilaiController;
 use App\Http\Controllers\Mahasiswa\MahasiswaNilaiController;
 use App\Http\Controllers\Mahasiswa\MahasiswaKrsController;
+use App\Http\Controllers\Mahasiswa\KrsController;
+use App\Http\Controllers\Mahasiswa\KhsController;
 
 Route::get('/login', [LoginController::class, 'form'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.process');
@@ -112,10 +114,8 @@ Route::middleware('auth')->prefix('mahasiswa')->group(function () {
     Route::get('/khs', [NilaiController::class, 'khs'])
         ->name('mahasiswa.khs');
 
-
-
-    Route::get('/daftar-nilai',
-        [MahasiswaNilaiController::class,'index']
-    )->name('mahasiswa.nilai.index');
+    Route::get('/khs/cetak', 
+        [MahasiswaNilaiController::class,'cetakKhs']
+    )->name('mahasiswa.khs.cetak');
 });
 
